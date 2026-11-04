@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import type { AppointmentStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import type { BookingRequest } from "@/lib/booking";
 import { prisma } from "@/lib/db";
 import { normalizePhone, isValidPhone } from "@/lib/phone";
 import { requireUser } from "@/lib/session";
@@ -48,7 +50,7 @@ export async function saveAppointment(form: FormData): Promise<AppointmentResult
         where: {
           businessId: user.businessId,
           stationId,
-          status: { in: ["BOOKED", "ARRIVED"] },
+          status: { in: ["REQUESTED", "BOOKED", "ARRIVED"] },
           id: d.id ? { not: d.id } : undefined,
           AND: [{ startsAt: { lt: endsAt } }, { endsAt: { gt: startsAt } }],
         },
@@ -140,6 +142,9 @@ export async function setAppointmentStatus(
 ): Promise<AppointmentResult> {
   try {
     const user = await requireUser();
+    // A request has no customer yet: it is answered from the list, which makes the records
+    const waiting = await prisma.appointment.count({ where: { id, businessId: user.businessId, status: "REQUESTED" } });
+    if (waiting) return { error: "Bu talebi Onay bekleyen listesinden yanıtlayın" };
     await prisma.appointment.update({
       where: { id, businessId: user.businessId },
       data: { status },
@@ -163,5 +168,39 @@ export async function deleteAppointment(id: string): Promise<AppointmentResult> 
     return { ok: true };
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Randevu silinemedi" };
+  }
+}
+
+/** The salon's answer to an online request. Only now do the customer and the pet get a record */
+export async function answerRequest(id: string, approve: boolean): Promise<AppointmentResult> {
+  try {
+    const user = await requireUser();
+    const appointment = await prisma.appointment.findFirst({ where: { id, businessId: user.businessId, status: "REQUESTED" } });
+    if (!appointment) return { error: "Talep bulunamadı" };
+
+    if (!approve) {
+      await prisma.appointment.update({ where: { id }, data: { status: "CANCELLED", request: Prisma.DbNull } });
+    } else {
+      const r = appointment.request as unknown as BookingRequest;
+      await prisma.$transaction(async (tx) => {
+        // A known number keeps the name the salon knows it by
+        const customer = await tx.customer.upsert({
+          where: { businessId_phone: { businessId: user.businessId, phone: r.phone } },
+          update: {},
+          create: { businessId: user.businessId, phone: r.phone, name: r.name },
+        });
+        const pet = await tx.pet.upsert({
+          where: { customerId_name: { customerId: customer.id, name: r.petName } },
+          update: {},
+          create: { businessId: user.businessId, customerId: customer.id, name: r.petName, breed: r.breed, size: r.size },
+        });
+        await tx.appointment.update({ where: { id }, data: { status: "BOOKED", customerId: customer.id, petId: pet.id, request: Prisma.DbNull } });
+      });
+    }
+    revalidatePath("/randevular");
+    revalidatePath("/bugun");
+    return { ok: true };
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "Talep yanıtlanamadı" };
   }
 }

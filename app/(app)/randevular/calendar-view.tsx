@@ -58,6 +58,7 @@ interface ServiceQuickOption {
 const HOURS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
 const STATUS_MAP: Record<AppointmentStatus, { label: string; bg: string; text: string; border: string }> = {
+  REQUESTED: { label: "Onay bekliyor", bg: "bg-amber-500/15", text: "text-amber-800 dark:text-amber-400", border: "border-amber-500/40" },
   BOOKED: { label: "Bekleniyor", bg: "bg-accent/15", text: "text-accent-strong", border: "border-accent/40" },
   ARRIVED: { label: "Geldi", bg: "bg-ready/15", text: "text-ready", border: "border-ready/40" },
   CANCELLED: { label: "İptal", bg: "bg-danger/10", text: "text-danger", border: "border-danger/30" },

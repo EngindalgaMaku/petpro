@@ -2,8 +2,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Building2, KeyRound, Sparkles, User, Users } from "lucide-react";
 import { Card } from "@/components/ui";
+import { ensureSlug } from "@/lib/booking";
 import { prisma } from "@/lib/db";
+import { planOf } from "@/lib/plan";
 import { canManage, requireUser } from "@/lib/session";
+import { BookingSettings } from "./booking-settings";
 import { BusinessSettingsForm, PasswordChangeForm } from "./settings-forms";
 import { StationsManager } from "./stations-manager";
 
@@ -25,6 +28,7 @@ export default async function SettingsPage() {
   if (!business) notFound();
 
   const isManager = canManage(user.role);
+  const slug = await ensureSlug(business);
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 px-4 pt-6 md:px-8">
@@ -69,6 +73,16 @@ export default async function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sol 2 Sütun: İşletme Bilgileri */}
         <div className="lg:col-span-2 space-y-6">
+          <BookingSettings
+            slug={slug}
+            enabled={business.bookingEnabled}
+            openTime={business.openTime}
+            closeTime={business.closeTime}
+            closedDays={business.closedDays}
+            canEdit={isManager}
+            restricted={planOf(user.business).level === "RESTRICTED"}
+          />
+
           <BusinessSettingsForm
             canEdit={isManager}
             business={{

@@ -185,3 +185,24 @@ export async function deleteStation(id: string): Promise<{ error?: string; succe
   revalidatePath("/kabul");
   return { success: "İstasyon başarıyla silindi." };
 }
+
+const bookingSchema = z.object({
+  openTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Açılış saatini seçin"),
+  closeTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Kapanış saatini seçin"),
+  closedDays: z.string().regex(/^[0-6]?(,[0-6])*$/),
+});
+
+export async function updateBooking(prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const user = await requireUser();
+  if (!canManage(user.role)) return { error: "Bu ayarı değiştirme yetkiniz yok." };
+  if (user.business.isDemo) return { error: DEMO_LOCKED };
+  const parsed = bookingSchema.safeParse({ openTime: form.get("openTime"), closeTime: form.get("closeTime"), closedDays: form.get("closedDays") });
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
+  if (parsed.data.openTime >= parsed.data.closeTime) return { error: "Kapanış saati açılıştan sonra olmalı." };
+  await prisma.business.update({
+    where: { id: user.businessId },
+    data: { ...parsed.data, bookingEnabled: form.get("enabled") === "on" },
+  });
+  revalidatePath("/ayarlar");
+  return { success: "Online randevu ayarları kaydedildi." };
+}

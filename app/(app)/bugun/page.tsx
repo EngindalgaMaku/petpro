@@ -43,6 +43,7 @@ export default async function TodayPage() {
   const [
     inside,
     ready,
+    requestCount,
     appointments,
     reminders,
     unpricedServices,
@@ -55,6 +56,7 @@ export default async function TodayPage() {
       where: { businessId, stage: { notIn: ["DELIVERED", "CANCELLED"] } },
     }),
     prisma.workOrder.count({ where: { businessId, stage: "READY" } }),
+    prisma.appointment.count({ where: { businessId, status: "REQUESTED", startsAt: { gte: new Date() } } }),
     prisma.appointment.findMany({
       where: {
         businessId,
@@ -201,6 +203,15 @@ export default async function TodayPage() {
       </header>
 
       {/* Unpriced warning */}
+      {requestCount > 0 && (
+        <Card className="flex items-center justify-between gap-4 border-accent/60 bg-accent/10 p-4" data-testid="request-alert">
+          <p className="text-sm font-semibold text-ink">{requestCount} online randevu talebi onay bekliyor.</p>
+          <Link href="/randevular" className={buttonStyles({ size: "sm", className: "shrink-0 whitespace-nowrap" })}>
+            Talepleri Gör
+          </Link>
+        </Card>
+      )}
+
       {unpricedServices > 0 && (
         <Card className="flex items-center justify-between gap-4 border-amber-500/50 bg-amber-500/10 p-4">
           <div className="flex items-center gap-3">

@@ -18,7 +18,7 @@ npm run dev
 2. Kabul: sahibinin telefonu → hayvan → hizmetler → kabul muayenesi ve fotoğraf → sahibinin onayı
 3. Salon panosu ve iş emri
 4. Sahibine takip bağlantısı ve bakım karnesi
-5. Randevu takvimi (istasyon çakışması)
+5. Randevu takvimi (istasyon çakışması) ve online randevu: `/r/<salon-adresi>`
 6. Kasa, giderler, kuaför primi
 7. Tıraş ve bakım hatırlatmaları
 
@@ -34,4 +34,4 @@ Android kabuğu henüz eklenmedi. Eklenince giriş sayfasındaki APK bağlantıs
 
 ## Giriş seviyesi ve kısıtlı mod
 
-Kaydolan işletme 30 gün bütün özelliklerle kullanır. Süre bitince kapanmaz, kayıtlarını kaybetmez; kısıtlı moda düşer: 30 günde en fazla 10 yeni kabul, yeni personel ve yeni fotoğraf yok. Sınırlar `lib/plan.ts` içindedir. Kaydolanlar `/yonetim?key=<ADMIN_KEY>` sayfasında görünür, süre uzatma ve ücretli yapma oradan yapılır. Yalnız ortak demo işletmesi her gece sıfırlanır.
+Kaydolan işletme 30 gün bütün özelliklerle kullanır. Süre bitince kapanmaz, kayıtlarını kaybetmez; kısıtlı moda düşer: 30 günde en fazla 10 yeni kabul, yeni personel ve yeni fotoğraf yok, online randevu kapalı. Sınırlar `lib/plan.ts` içindedir. Kaydolanlar `/yonetim?key=<ADMIN_KEY>` sayfasında görünür, süre uzatma ve ücretli yapma oradan yapılır. Yalnız ortak demo işletmesi her gece sıfırlanır.

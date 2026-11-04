@@ -28,6 +28,12 @@ model Business {
   pricesIncludeVat Boolean  @default(true) @map("prices_include_vat")
   entryEndsAt      DateTime? @map("entry_ends_at") // lib/plan.ts: end of the free entry level
   paidUntil        DateTime? @map("paid_until") // set by hand from /yonetim
+  // Online booking (lib/booking.ts). Closed days are getDay() numbers: "0" = Sunday
+  slug             String?  @unique @db.VarChar(60)
+  bookingEnabled   Boolean  @default(true) @map("booking_enabled")
+  openTime         String   @default("09:00") @map("open_time") @db.VarChar(5)
+  closeTime        String   @default("19:00") @map("close_time") @db.VarChar(5)
+  closedDays       String   @default("0") @map("closed_days") @db.VarChar(20)
   isDemo           Boolean  @default(false) @map("is_demo") // the shared demo salon: reset nightly, account changes locked
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
@@ -406,6 +412,7 @@ model Photo {
 // ---------------------------------------------------------------- appointments
 
 enum AppointmentStatus {
+  REQUESTED // left on the public page, waiting for the salon
   BOOKED
   ARRIVED // turned into a work order
   CANCELLED
@@ -424,6 +431,8 @@ model Appointment {
   status         AppointmentStatus @default(BOOKED)
   workOrderId    String?           @unique @map("work_order_id")
   notes          String?           @db.Text
+  // What the owner typed online (lib/booking.ts); cleared once the salon answers
+  request        Json?
   createdAt      DateTime          @default(now()) @map("created_at")
 
   business  Business   @relation(fields: [businessId], references: [id], onDelete: Cascade)

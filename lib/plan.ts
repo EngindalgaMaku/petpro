@@ -1,6 +1,6 @@
 // What a business may do. New sign-ups start at the entry level with everything open; when it
 // runs out the business drops to restricted mode instead of being closed, and keeps its records.
-// A paid period is set by hand from /yonetim. The public demo business is outside all of this.
+// Restricted mode also closes online booking. A paid period is set by hand from /yonetim. The public demo business is outside all of this.
 
 export const ENTRY_DAYS = 30;
 export const ENTRY_PHOTOS_PER_BUSINESS = 2000;

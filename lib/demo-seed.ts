@@ -36,6 +36,7 @@ export async function seedDemo(prisma: PrismaClient) {
     data: {
       isDemo: true,
       name: "Demo Pet Kuaför",
+      slug: "demo",
       phone: "02125550000",
       email: "demo@petpro.com",
       address: "Örnek Mahallesi Pati Sokak No:1",
@@ -340,6 +341,21 @@ export async function seedDemo(prisma: PrismaClient) {
       endsAt: at(18, 30),
       status: "BOOKED",
       notes: "Son saatte gelmek istedi, sakin olsun diye.",
+    },
+  });
+
+  // Online talep: salon onayını bekliyor. Yarın 11.00, Tıraş Masası 2
+  const tomorrow = new Date(at(11).getTime() + hours(24));
+  await prisma.appointment.create({
+    data: {
+      businessId: business.id,
+      stationId: table2.id,
+      title: "Bulut · Komple tıraş",
+      startsAt: tomorrow,
+      endsAt: new Date(tomorrow.getTime() + hours(1.5)),
+      status: "REQUESTED",
+      notes: "İlk kez geliyoruz, biraz ürkek.",
+      request: { name: "Merve Aydın", phone: "05551234567", petName: "Bulut", breed: "Pomeranian", size: PetSize.SMALL },
     },
   });
 

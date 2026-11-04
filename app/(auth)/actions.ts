@@ -65,6 +65,7 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
     const business = await tx.business.create({
       data: { name: data.businessName, phone: normalizePhone(data.phone), entryEndsAt: new Date(Date.now() + ENTRY_DAYS * 24 * 3600 * 1000) },
     });
+    // A new salon has no address yet: the settings page makes it from the name (lib/booking.ts)
     await tx.station.createMany({
       data: STARTER_STATIONS.map((s, i) => ({ ...s, businessId: business.id, sortOrder: i })),
     });
