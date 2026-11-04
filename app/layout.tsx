@@ -1,20 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow, Barlow_Semi_Condensed, Inter } from "next/font/google";
+import { Baloo_2, Nunito } from "next/font/google";
 import { MobileShell } from "@/components/mobile-shell";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter", display: "swap" });
-const barlow = Barlow({
+const nunito = Nunito({ subsets: ["latin", "latin-ext"], variable: "--font-nunito", display: "swap" });
+const baloo = Baloo_2({
   subsets: ["latin", "latin-ext"],
   weight: ["500", "600", "700"],
-  variable: "--font-barlow",
-  display: "swap",
-});
-const barlowCondensed = Barlow_Semi_Condensed({
-  subsets: ["latin", "latin-ext"],
-  weight: ["700"],
-  variable: "--font-barlow-condensed",
+  variable: "--font-baloo",
   display: "swap",
 });
 
@@ -36,8 +30,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0e14" },
+    { media: "(prefers-color-scheme: light)", color: "#fbf7f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e1a1b" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -49,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="tr"
       suppressHydrationWarning
-      className={`${inter.variable} ${barlow.variable} ${barlowCondensed.variable}`}
+      className={`${nunito.variable} ${baloo.variable}`}
     >
       <body className="min-h-dvh antialiased bg-ground text-ink selection:bg-accent/30 selection:text-accent">
         <ThemeProvider

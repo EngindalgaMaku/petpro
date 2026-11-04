@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Columns3, Plus, Users, Wallet } from "lucide-react";
+import { CalendarDays, Dog, PawPrint, Plus, Wallet } from "lucide-react";
 import { BrandMark } from "@/components/brand";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
   { href: "/bugun", label: "Bugün", icon: CalendarDays },
-  { href: "/salon", label: "Salon", icon: Columns3 },
+  { href: "/salon", label: "Salon", icon: PawPrint },
   { href: "/kabul", label: "Yeni Kabul", icon: Plus, primary: true },
-  { href: "/musteriler", label: "Müşteriler", icon: Users },
+  { href: "/musteriler", label: "Müşteriler", icon: Dog },
   { href: "/kasa", label: "Kasa", icon: Wallet },
 ] as const;
 

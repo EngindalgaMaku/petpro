@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { CatFace, DogFace } from "@/components/pet-art";
 import { PetTag } from "@/components/pet-tag";
 import { Card } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -67,8 +68,11 @@ export default async function CareCardPage({ params }: { params: Promise<{ token
         <h1 className="mt-1 font-display text-[28px] font-bold">Bakım karnesi</h1>
       </header>
 
-      <Card className="space-y-3 p-4">
-        <PetTag pet={pet} size="md" />
+      <Card className="paw-bg space-y-3 overflow-hidden p-4 print:overflow-visible">
+        <div className="flex items-center gap-3">
+          {pet.size === "CAT" ? <CatFace className="h-14 w-14 shrink-0" /> : <DogFace className="h-14 w-14 shrink-0" />}
+          <PetTag pet={pet} size="md" />
+        </div>
         <p className="text-sm text-muted">
           {[pet.breed, SIZES[pet.size].label, pet.color, pet.birthYear && `${pet.birthYear} doğumlu`].filter(Boolean).join(" · ")}
         </p>

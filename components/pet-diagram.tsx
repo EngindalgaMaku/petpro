@@ -70,7 +70,7 @@ export function PetDiagram({
       {placed.map((m) => (
         <g key={m.number} aria-hidden="true" pointerEvents="none">
           <circle cx={m.cx} cy={m.cy} r={10} fill={isPrint ? "#dc2626" : "var(--diagram-mark)"} stroke={isPrint ? "#ffffff" : "var(--diagram-mark-ring)"} strokeWidth={1.5} />
-          <text x={m.cx} y={m.cy + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="#ffffff" fontFamily="var(--font-inter), sans-serif">
+          <text x={m.cx} y={m.cy + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="#ffffff" fontFamily="var(--font-nunito), sans-serif">
             {m.number}
           </text>
         </g>

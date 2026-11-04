@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { WorkStage } from "@prisma/client";
+import type { PetSize, WorkStage } from "@prisma/client";
+import { DogFace, CatFace, STAGE_ICONS } from "@/components/pet-art";
 import { PetTag } from "@/components/pet-tag";
 import { formatTL } from "@/lib/money";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,7 @@ export interface BoardCard {
   stage: WorkStage;
   taxi: boolean;
   petName: string;
+  size: PetSize;
   breed: string;
   work: string;
   who: string | null;
@@ -33,7 +35,7 @@ function Card({ c, compact }: { c: BoardCard; compact?: boolean }) {
       )}
     >
       <div className="flex items-center justify-between gap-2">
-        <PetTag pet={{ name: c.petName }} size={compact ? "xs" : "sm"} />
+        <PetTag pet={{ name: c.petName, size: c.size }} size={compact ? "xs" : "sm"} />
         {c.taxi && <span className="rounded-full bg-raised px-2 py-0.5 text-xs text-accent-strong">Pet taksi yolda</span>}
       </div>
       {c.breed && <p className="truncate font-semibold">{c.breed}</p>}
@@ -64,8 +66,12 @@ export function Board({ cards, columns }: { cards: BoardCard[]; columns: Array<{
 
   if (cards.length === 0) {
     return (
-      <div className="rounded-card border border-dashed border-line p-10 text-center text-muted">
-        Salonda hayvan yok. Yeni gelen için <Link href="/kabul" className="font-semibold text-accent-strong">Yeni Kabul</Link>.
+      <div className="paw-bg overflow-hidden rounded-card border border-dashed border-line p-10 text-center text-muted">
+        <span className="mb-3 flex justify-center gap-1" aria-hidden="true">
+          <DogFace className="h-14 w-14" />
+          <CatFace className="h-14 w-14" />
+        </span>
+        Salon şu an boş. Yeni gelen için <Link href="/kabul" className="font-semibold text-accent-strong">Yeni Kabul</Link>.
       </div>
     );
   }
@@ -86,6 +92,10 @@ export function Board({ cards, columns }: { cards: BoardCard[]; columns: Array<{
                 phoneStage === stage ? "border-accent bg-accent font-semibold text-accent-ink" : "border-line bg-surface"
               )}
             >
+              {stage !== "ALL" && (() => {
+                const Icon = STAGE_ICONS[stage];
+                return <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />;
+              })()}
               {title}
               <span className="text-xs tabular-nums opacity-75">{stage === "ALL" ? cards.length : count(stage)}</span>
             </button>
@@ -106,7 +116,13 @@ export function Board({ cards, columns }: { cards: BoardCard[]; columns: Array<{
         {columns.map(({ stage, title }) => (
           <section key={stage} aria-label={title} className="min-w-0 space-y-2 rounded-card bg-sunken p-2.5">
             <div className="flex items-center justify-between px-1.5 py-1">
-              <h2 className="font-display text-[17px] font-semibold">{title}</h2>
+              <h2 className="flex items-center gap-1.5 font-display text-[17px] font-semibold">
+                {(() => {
+                  const Icon = STAGE_ICONS[stage];
+                  return <Icon className="h-4 w-4 text-accent-strong" aria-hidden="true" />;
+                })()}
+                {title}
+              </h2>
               <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-raised px-1.5 text-xs font-semibold text-muted">
                 {count(stage)}
               </span>

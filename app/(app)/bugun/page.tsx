@@ -7,9 +7,10 @@ import {
   Coins,
   LogOut,
   Search,
-  Sparkles,
+  Bone,
   TrendingUp,
 } from "lucide-react";
+import { PetFaces } from "@/components/pet-art";
 import { PetTag } from "@/components/pet-tag";
 import { Badge, buttonStyles, Card, Eyebrow } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -169,8 +170,9 @@ export default async function TodayPage() {
               {user.business.name} · Pet Kuaförü
             </p>
           </div>
-          <h1 className="mt-1 font-display text-2xl font-bold tracking-tight sm:text-3xl text-ink">
+          <h1 className="mt-1 flex items-center gap-2 font-display text-2xl font-bold tracking-tight sm:text-3xl text-ink">
             Bugün
+            <PetFaces className="h-9" />
           </h1>
           <p className="mt-0.5 text-xs text-muted">
             {new Date().toLocaleDateString("tr-TR", {
@@ -408,7 +410,7 @@ export default async function TodayPage() {
           </div>
           {reminders.length === 0 ? (
             <Card className="p-8 text-center text-sm text-muted border-dashed">
-              <Sparkles className="h-8 w-8 mx-auto mb-2 text-muted/40" />
+              <Bone className="h-8 w-8 mx-auto mb-2 text-muted/40" />
               Bu hafta hatırlatılacak tıraş veya bakım hatırlatması yok.
             </Card>
           ) : (

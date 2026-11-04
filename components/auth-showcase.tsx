@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BellRing, CalendarClock, Link2, PawPrint, Tags } from "lucide-react";
+import { BellRing, CalendarClock, Dog, Link2, Tags } from "lucide-react";
 import { BrandMark } from "@/components/brand";
+import { PetFaces } from "@/components/pet-art";
 import { PetTag } from "@/components/pet-tag";
 import { cn } from "@/lib/utils";
 
@@ -107,7 +108,7 @@ const SLIDES = [
 ] as const;
 
 export const FEATURES = [
-  { icon: PawPrint, title: "Hayvan kartı", text: "Irk, mizaç, alerji, geçmiş" },
+  { icon: Dog, title: "Hayvan kartı", text: "Irk, mizaç, alerji, geçmiş" },
   { icon: Tags, title: "Boya göre fiyat", text: "Kediden dev köpeğe" },
   { icon: Link2, title: "Takip bağlantısı", text: "Üyeliksiz, WhatsApp'tan" },
   { icon: BellRing, title: "Tıraş hatırlatma", text: "Zamanı gelen müşteriler" },
@@ -131,7 +132,7 @@ export function AuthShowcase() {
       aria-label="PetPro tanıtımı"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      className="relative flex min-h-dvh flex-col justify-between overflow-hidden border-r border-line bg-sunken p-10 xl:p-14"
+      className="paw-bg relative flex min-h-dvh flex-col justify-between overflow-hidden border-r border-line bg-sunken p-10 xl:p-14"
     >
       <div className="flex items-center justify-between">
         <BrandMark />
@@ -143,6 +144,7 @@ export function AuthShowcase() {
 
       <div className="my-auto grid grid-cols-12 items-center gap-10 py-10">
         <div className="col-span-6 space-y-5" aria-live="polite">
+          <PetFaces className="h-20" />
           <span className="inline-flex rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent-strong">{slide.badge}</span>
           <h2 className="font-display text-[34px] font-bold leading-tight xl:text-[40px]">{slide.title}</h2>
           <p className="leading-relaxed text-muted">{slide.text}</p>

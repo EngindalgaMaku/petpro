@@ -7,7 +7,9 @@ import {
   BadgePercent,
   Calendar,
   CalendarDays,
-  Columns3,
+  Dog,
+  PawPrint,
+  Scissors,
   LogOut,
   Menu,
   PanelLeftClose,
@@ -15,8 +17,6 @@ import {
   Plus,
   QrCode,
   Settings,
-  Sparkles,
-  Users,
   Wallet,
   X,
 } from "lucide-react";
@@ -37,11 +37,11 @@ export interface SidebarUser {
 
 const NAV_ITEMS = [
   { href: "/bugun", label: "Bugün", icon: CalendarDays },
-  { href: "/salon", label: "Salon", icon: Columns3 },
+  { href: "/salon", label: "Salon", icon: PawPrint },
   { href: "/kabul", label: "Yeni Kabul", icon: Plus, primary: true },
   { href: "/randevular", label: "Randevu Takvimi", icon: Calendar },
-  { href: "/musteriler", label: "Müşteriler", icon: Users },
-  { href: "/hizmetler", label: "Hizmetler & Paketler", icon: Sparkles },
+  { href: "/musteriler", label: "Müşteriler", icon: Dog },
+  { href: "/hizmetler", label: "Hizmetler & Paketler", icon: Scissors },
   { href: "/kasa", label: "Kasa & Finans", icon: Wallet },
   { href: "/personel", label: "Personel & Prim", icon: BadgePercent },
   { href: "/ayarlar", label: "Ayarlar", icon: Settings },
@@ -49,9 +49,9 @@ const NAV_ITEMS = [
 
 const MOBILE_ITEMS = [
   { href: "/bugun", label: "Bugün", icon: CalendarDays },
-  { href: "/salon", label: "Salon", icon: Columns3 },
+  { href: "/salon", label: "Salon", icon: PawPrint },
   { href: "/kabul", label: "Kabul", icon: Plus, primary: true },
-  { href: "/musteriler", label: "Müşteriler", icon: Users },
+  { href: "/musteriler", label: "Müşteriler", icon: Dog },
   { href: "/kasa", label: "Kasa", icon: Wallet },
 ] as const;
 

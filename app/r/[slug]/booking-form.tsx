@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
-import { Check, CheckCircle2, Loader2, MessageCircle } from "lucide-react";
+import { Check, Loader2, MessageCircle } from "lucide-react";
 import type { PetSize } from "@prisma/client";
+import { CatFace, DogFace, SizeIcon } from "@/components/pet-art";
 import { Button, buttonStyles, Card, Field, Input } from "@/components/ui";
 import { formatTL, sizePrice } from "@/lib/money";
 import { isValidPhone, whatsappNumber } from "@/lib/phone";
@@ -135,7 +136,9 @@ export function BookingForm({
     const message = `Merhaba, ${petName.trim()} için ${summary} randevu talebi bıraktım. Adım: ${name.trim()}`;
     return (
       <Card className="space-y-4 p-6 text-center" data-testid="booking-done">
-        <CheckCircle2 className="mx-auto h-12 w-12 text-ready" aria-hidden="true" />
+        <span className="flex justify-center" aria-hidden="true">
+          {size === "CAT" ? <CatFace className="h-20 w-20" /> : <DogFace className="h-20 w-20" />}
+        </span>
         <div>
           <h2 className="font-display text-2xl font-bold">Talebiniz alındı</h2>
           <p className="mt-1 text-muted">
@@ -165,7 +168,10 @@ export function BookingForm({
               onClick={() => setSize(s)}
               className={cn("min-h-14 rounded-xl px-3 py-2 text-left", size === s ? "bg-accent font-semibold text-accent-ink" : "border border-line bg-raised")}
             >
-              <span className="block leading-tight">{SIZES[s].label}</span>
+              <span className="flex items-center gap-1.5 leading-tight">
+                <SizeIcon size={s} className="shrink-0" />
+                {SIZES[s].label}
+              </span>
               {SIZES[s].hint && <span className="block text-xs opacity-75">{SIZES[s].hint}</span>}
             </button>
           ))}

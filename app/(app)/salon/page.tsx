@@ -292,6 +292,7 @@ export default async function SalonPage({
       stage: o.stage === "TAXI_DELIVERY" ? "READY" : o.stage,
       taxi: o.stage === "TAXI_DELIVERY",
       petName: o.pet.name,
+      size: o.pet.size,
       breed: o.pet.breed ?? "",
       work: o.items.map((i) => i.name).join(", "),
       who: o.groomer?.name ?? null,

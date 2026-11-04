@@ -5,6 +5,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { AlertTriangle, Check, CheckCircle2, Loader2, MessageCircle, Plus, Printer } from "lucide-react";
 import type { PaymentMethod, PetSize, ServiceKind, Temperament } from "@prisma/client";
+import { SizeIcon } from "@/components/pet-art";
 import { PetTag } from "@/components/pet-tag";
 import { Button, buttonStyles, Card, Eyebrow, Field, Input } from "@/components/ui";
 import { formatTL, parseTL, sizePrice } from "@/lib/money";
@@ -469,7 +470,10 @@ export function IntakeForm({
                   <div className="grid grid-cols-2 gap-2">
                     {SIZE_KEYS.map((s) => (
                       <Chip key={s} selected={size === s} onClick={() => changeSize(s)}>
-                        <span className="block leading-tight">{SIZES[s].label}</span>
+                        <span className="flex items-center gap-1.5 leading-tight">
+                          <SizeIcon size={s} className="shrink-0" />
+                          {SIZES[s].label}
+                        </span>
                         <span className="block text-xs opacity-70">
                           {[SIZES[s].hint, `× ${multipliers[s].toLocaleString("tr-TR")}`].filter(Boolean).join(" · ")}
                         </span>

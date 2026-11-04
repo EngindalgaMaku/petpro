@@ -10,6 +10,7 @@ import { detailSummary, type ItemDetails } from "@/lib/service-kinds";
 import { BOARD_STAGES, STAGES } from "@/lib/stages";
 import { cn } from "@/lib/utils";
 import { CONDITION_KINDS, PART_LABELS } from "@/lib/pet-parts";
+import { CatFace, DogFace, STAGE_ICONS } from "@/components/pet-art";
 import { PetDiagram } from "@/components/pet-diagram";
 import { ApproveButton } from "./approve-button";
 
@@ -53,8 +54,9 @@ export default async function TrackingPage({ params }: { params: Promise<{ token
         <span className="text-xs text-muted">Üyelik gerekmez</span>
       </header>
 
-      <Card className="space-y-4 p-4">
+      <Card className="paw-bg space-y-4 overflow-hidden p-4">
         <div className="flex items-center gap-3">
+          {order.pet.size === "CAT" ? <CatFace className="h-14 w-14 shrink-0" /> : <DogFace className="h-14 w-14 shrink-0" />}
           <PetTag pet={order.pet} size="md" />
           <span className="text-sm text-muted">{order.pet.breed}</span>
         </div>
@@ -76,9 +78,12 @@ export default async function TrackingPage({ params }: { params: Promise<{ token
           <ol aria-label="Aşamalar" className="grid grid-cols-5 gap-1">
             {steps.map((label, i) => {
               const reached = finished || i <= stageIndex;
+              const Icon = STAGE_ICONS[BOARD_STAGES[i]];
               return (
-                <li key={label} aria-current={i === stageIndex ? "step" : undefined}>
-                  <span className={cn("block h-1.5 rounded-full", reached ? "bg-accent" : "bg-line")} />
+                <li key={label} aria-current={i === stageIndex ? "step" : undefined} className="text-center">
+                  <span className={cn("mx-auto flex h-9 w-9 items-center justify-center rounded-full", reached ? "bg-accent text-accent-ink" : "bg-raised text-muted", i === stageIndex && "ring-2 ring-accent/40 ring-offset-2 ring-offset-surface")}>
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
                   <span className={cn("mt-1.5 block text-[11px]", i === stageIndex ? "font-semibold text-ink" : "text-muted")}>{label}</span>
                 </li>
               );

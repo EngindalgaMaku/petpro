@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { PetSize } from "@prisma/client";
+import { PetFaces } from "@/components/pet-art";
 import { Card } from "@/components/ui";
 import { bookableDays } from "@/lib/booking";
 import { prisma } from "@/lib/db";
@@ -58,10 +59,13 @@ export default async function BookingPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className="mx-auto max-w-xl space-y-4 px-4 pb-10 pt-[calc(1.5rem+env(safe-area-inset-top))]">
-      <header>
-        <p className="text-sm text-muted">Online randevu</p>
-        <h1 className="font-display text-[28px] font-bold leading-tight">{business.name}</h1>
-        {where && <p className="text-sm text-muted">{where}</p>}
+      <header className="paw-bg flex items-center justify-between gap-3 overflow-hidden rounded-card border border-line bg-surface p-4">
+        <div className="min-w-0">
+          <p className="text-sm text-muted">Online randevu</p>
+          <h1 className="font-display text-[28px] font-bold leading-tight">{business.name}</h1>
+          {where && <p className="text-sm text-muted">{where}</p>}
+        </div>
+        <PetFaces className="h-16 shrink-0" />
       </header>
       {business.isDemo && (
         <p role="note" className="rounded-xl bg-accent/10 px-3 py-2 text-sm">
