@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>PetPro</title>
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: #0b0e14;
+        color: #f8fafc;
+        text-align: center;
+        padding: 24px;
+        box-sizing: border-box;
+      }
+      .logo {
+        display: block;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+      }
+      h1 { font-size: 20px; margin: 0 0 8px; }
+      p { font-size: 15px; color: #94a3b8; margin: 0 0 24px; line-height: 1.5; }
+      button {
+        font: inherit;
+        font-weight: 600;
+        color: #1a1300;
+        background: #ffb020;
+        border: 0;
+        border-radius: 12px;
+        padding: 12px 28px;
+        min-height: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <svg class="logo" viewBox="0 0 72 72" aria-hidden="true">
+        <rect width="72" height="72" rx="18" fill="#ffb020"></rect>
+        <g transform="translate(12 12) scale(2)" fill="none" stroke="#1a1300" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 16l1.6-5.2A2 2 0 0 1 8.5 9.4h7a2 2 0 0 1 1.9 1.4L19 16"></path>
+          <path d="M4 16h16v3H4z"></path>
+        </g>
+      </svg>
+      <!-- Capacitor shows this page for connection failures and for HTTP errors on a page load -->
+      <h1>Sayfa açılamadı</h1>
+      <p>İnternet bağlantınızı kontrol edip yeniden deneyin.</p>
+      <button type="button" onclick="location.href = 'https://petpro.kodleon.com'">Yeniden dene</button>
+    </main>
+  </body>
+</html>

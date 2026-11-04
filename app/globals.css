@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
+
+:root {
+  /* Light theme. Amber fills carry dark text; amber as text on white needs the deeper shade (accent-strong) */
+  --color-ground: #f8fafc;
+  --color-sunken: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-raised: #f1f5f9;
+  --color-overlay: #e2e8f0;
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
+  --color-ink: #0f172a;
+  --color-muted: #56657a;
+  --color-accent: #0d9488;
+  --color-accent-hover: #14b8a6;
+  --color-accent-ink: #ffffff;
+  --color-accent-strong: #0f766e;
+  --color-ready: #06694c;
+  --color-ready-bg: #ecfdf5;
+  --color-info: #0369a1;
+  --color-info-bg: #f0f9ff;
+  --color-danger: #b91c1c;
+  --color-danger-ink: #ffffff;
+  --color-danger-bg: #fef2f2;
+
+  /* Vehicle diagram */
+  --diagram-panel: #e6ebf2;
+  --diagram-panel-on: #cbd5e1;
+  --diagram-glass: #f8fafc;
+  --diagram-stroke: #64748b;
+  --diagram-wheel: #64748b;
+  --diagram-text: #0f172a;
+  --diagram-mark: #dc2626;
+  --diagram-mark-ring: #ffffff;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-barlow), var(--font-inter), sans-serif;
+
+  --radius-card: 16px;
+}
+
+.dark {
+  /* Obsidian & Titanium Detailing Dark Mode */
+  --color-ground: #0b0e14;
+  --color-sunken: #10141d;
+  --color-surface: #171c26;
+  --color-raised: #212836;
+  --color-overlay: #293244;
+  --color-line: #2b3447;
+  --color-line-strong: #424e68;
+  --color-ink: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-accent: #2dd4bf;
+  --color-accent-hover: #5eead4;
+  --color-accent-ink: #04201c;
+  --color-accent-strong: #2dd4bf;
+  --color-ready: #34d399;
+  --color-ready-bg: #064e3b;
+  --color-info: #38bdf8;
+  --color-info-bg: #0c4a6e;
+  --color-danger: #f87171;
+  --color-danger-ink: #1a0a0a;
+  --color-danger-bg: #450a0a;
+
+  --diagram-panel: #22262e;
+  --diagram-panel-on: #2e333c;
+  --diagram-glass: #16191e;
+  --diagram-stroke: #5b6270;
+  --diagram-wheel: #5b6270;
+  --diagram-text: #f3f4f6;
+  --diagram-mark: #f87171;
+  --diagram-mark-ring: #111317;
+}
+
+@theme {
+  --color-ground: var(--color-ground);
+  --color-sunken: var(--color-sunken);
+  --color-surface: var(--color-surface);
+  --color-raised: var(--color-raised);
+  --color-overlay: var(--color-overlay);
+  --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
+  --color-ink: var(--color-ink);
+  --color-muted: var(--color-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-ready: var(--color-ready);
+  --color-ready-bg: var(--color-ready-bg);
+  --color-info: var(--color-info);
+  --color-info-bg: var(--color-info-bg);
+  --color-danger: var(--color-danger);
+  --color-danger-ink: var(--color-danger-ink);
+  --color-danger-bg: var(--color-danger-bg);
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-barlow), var(--font-inter), sans-serif;
+
+  --radius-card: 16px;
+}
+
+@layer base {
+  html {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  body {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ground);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
+  }
+}
+
+/* Micro animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The on-screen keyboard is up (components/mobile-shell.tsx) */
+html[data-keyboard] .hide-on-keyboard {
+  display: none !important;
+}
+
+@media print {
+  html, body {
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    color-scheme: light !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  /* A dialog with something to print (the receipt): only its content goes on paper */
+  body:has(.print-area) > :not(.print-area) {
+    display: none !important;
+  }
+  .print-area {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+    translate: 0 0 !important;
+    transform: none !important;
+    animation: none !important;
+    display: block !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+  .print-area > button {
+    display: none !important;
+  }
+  .print-area .overflow-y-auto {
+    overflow: visible !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .receipt-thermal {
+    width: 78mm !important;
+    max-width: 78mm !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    font-size: 11px !important;
+    color: #000 !important;
+  }
+  @page {
+    size: auto;
+    margin: 6mm;
+  }
+}

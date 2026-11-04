@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets and local data
+.env
+.env.local
+storage/
+
+# Android signing (when the Capacitor shell is added)
+android/keystore.properties
+*.jks
+*.keystore
+
+# Locally built Android packages, except the one the sign-in page offers
+*.apk
+!/public/PetPro.apk
